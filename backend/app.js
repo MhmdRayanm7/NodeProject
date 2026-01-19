@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session");
 
 const authRouter = require("./routes/auth");
 const levelsRouter = require("./routes/levels");
@@ -7,7 +8,17 @@ const progressRouter = require("./routes/progress");
 
 const app = express();
 
+// middleware
 app.use(express.json());
+
+app.use(
+  session({
+    secret: "light_of_vision_secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 } // 1 hour
+  })
+);
 
 // main test route
 app.get("/", (req, res) => {

@@ -1,15 +1,13 @@
 const express = require("express");
 const db = require("../db");
+const { isAuthenticated } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
 // GET ALL
-router.get("/", (req, res) => {
+router.get("/", isAuthenticated, (req, res) => {
   db.query("SELECT * FROM levels", (err, result) => {
-    if (err) {
-      res.status(500).json(err);
-      return;
-    }
+    if (err) return res.status(500).json(err);
     res.json(result);
   });
 });
