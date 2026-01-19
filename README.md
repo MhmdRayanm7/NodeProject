@@ -11,18 +11,5 @@ for the game "Light of Vision".
 - Frontend: React
 - Authentication: Login / Register
 
-## Database Tables
-- users
-- levels
-- items
-- player_progress
-- game_logs
-
-## Project Structure
-light-of-vision-node/
-├── backend/
-├── sql/
-└── README.md
-
 ## Status
 Project in development.
