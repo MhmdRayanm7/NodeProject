@@ -9,7 +9,6 @@ for the game "Light of Vision".
 - Backend: Node.js + Express
 - Database: MySQL
 - Frontend: React
-- Authentication: Login / Register
 
 ## Status
 Project in development.
