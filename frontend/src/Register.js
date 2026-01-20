@@ -1,39 +1,29 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Register({ setPage }) {
+function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const register = async () => {
-    const res = await fetch("http://localhost:3000/auth/register", {
+  // register user
+  const register = () => {
+    fetch("/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
       body: JSON.stringify({ username, password })
+    }).then(() => {
+      navigate("/login");
     });
-
-    if (res.ok) {
-      alert("Registration successful");
-      setPage("login");
-    } else {
-      alert("Registration failed");
-    }
   };
 
   return (
     <div>
-      <input
-        placeholder="Username"
-        onChange={e => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={e => setPassword(e.target.value)}
-      />
-      <button type="button" onClick={register}>
-        Register
-      </button>
+      <h2>Register</h2>
+      <input placeholder="username" onChange={e => setUsername(e.target.value)} />
+      <input type="password" placeholder="password" onChange={e => setPassword(e.target.value)} />
+      <button onClick={register}>Register</button>
     </div>
   );
 }

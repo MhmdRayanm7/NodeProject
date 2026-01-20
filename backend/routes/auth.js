@@ -73,23 +73,22 @@ router.post("/login", (req, res) => {
   );
 });
 
-// LOGOUT
+// logout
 router.post("/logout", (req, res) => {
   req.session.destroy(() => {
+    res.clearCookie("connect.sid");
     res.json({ message: "Logged out" });
   });
 });
 
-//endpoint
+
+// check session
 router.get("/me", (req, res) => {
   if (!req.session.user) {
-    return res.status(401).json({ loggedIn: false });
+    return res.status(401).json({ message: "Not authenticated" });
   }
 
-  res.json({
-    loggedIn: true,
-    user: req.session.user
-  });
+  res.json(req.session.user);
 });
 
 

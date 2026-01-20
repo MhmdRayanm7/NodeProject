@@ -1,39 +1,32 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Login({ setPage }) {
+function Login({ setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const login = async () => {
-    const res = await fetch("http://localhost:3000/auth/login", {
+  // login user
+  const login = () => {
+    fetch("/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
       body: JSON.stringify({ username, password })
-    });
-
-    if (res.ok) {
-      alert("Login successful");
-      setPage("home");
-    } else {
-      alert("Login failed");
-    }
+    })
+      .then(res => res.json())
+      .then(data => {
+        setUser(data);
+        navigate("/");
+      });
   };
 
   return (
     <div>
-      <input
-        placeholder="Username"
-        onChange={e => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={e => setPassword(e.target.value)}
-      />
-      <button type="button" onClick={login}>
-        Login
-      </button>
+      <h2>Login</h2>
+      <input placeholder="username" onChange={e => setUsername(e.target.value)} />
+      <input type="password" placeholder="password" onChange={e => setPassword(e.target.value)} />
+      <button onClick={login}>Login</button>
     </div>
   );
 }

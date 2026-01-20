@@ -1,54 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Levels() {
-  const [levels, setLevels] = useState([]);
-  const [name, setName] = useState("");
+function Levels({ user }) {
+  const navigate = useNavigate();
 
-  const loadLevels = async () => {
-    const res = await fetch("http://localhost:3000/levels", {
-      credentials: "include"
-    });
-    const data = await res.json();
-    setLevels(data);
-  };
-
+  // protect page
   useEffect(() => {
-    loadLevels();
-  }, []);
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
-  const addLevel = async () => {
-    await fetch("http://localhost:3000/levels", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        level_name: name,
-        difficulty: 1,
-        description: "Created from UI"
-      })
-    });
-    setName("");
-    loadLevels();
-  };
+  if (!user) return null;
 
-  return (
-    <div className="container">
-      <h2>Game Levels</h2>
-
-      <input
-        placeholder="New level name"
-        value={name}
-        onChange={e => setName(e.target.value)}
-      />
-      <button onClick={addLevel}>Add Level</button>
-
-      <ul>
-        {levels.map(l => (
-          <li key={l.id}>{l.level_name}</li>
-        ))}
-      </ul>
-    </div>
-  );
+  return <h2>Levels Page (Protected)</h2>;
 }
 
 export default Levels;
