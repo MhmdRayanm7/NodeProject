@@ -8,27 +8,30 @@ function Login({ setPage }) {
     const res = await fetch("http://localhost:3000/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: "include",
       body: JSON.stringify({ username, password })
     });
 
     if (res.ok) {
-      setPage("levels");
+      alert("Login successful");
+      setPage("home");
     } else {
       alert("Login failed");
     }
   };
 
   return (
-    <div className="container">
-      <h2>Login</h2>
-
-      <input placeholder="Username" onChange={e => setUsername(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-
-      <button onClick={login}>Login</button>
-      <button className="secondary" onClick={() => setPage("register")}>
-        Register
+    <div>
+      <input
+        placeholder="Username"
+        onChange={e => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={e => setPassword(e.target.value)}
+      />
+      <button type="button" onClick={login}>
+        Login
       </button>
     </div>
   );

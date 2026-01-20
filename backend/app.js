@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require("express-session");
+const path = require("path");
 
 const authRouter = require("./routes/auth");
 const levelsRouter = require("./routes/levels");
@@ -7,6 +8,7 @@ const itemsRouter = require("./routes/items");
 const progressRouter = require("./routes/progress");
 
 const app = express();
+const PORT = 3000;
 
 // middleware
 app.use(express.json());
@@ -16,27 +18,24 @@ app.use(
     secret: "light_of_vision_secret",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 } // 1 hour
+    cookie: { maxAge: 1000 * 60 * 60 }
   })
 );
 
-// main test route
-app.get("/", (req, res) => {
-  res.send("Light of Vision API is running");
-});
-
-// routers
+// API routes
 app.use("/auth", authRouter);
 app.use("/levels", levelsRouter);
 app.use("/items", itemsRouter);
 app.use("/progress", progressRouter);
 
-// 404
+// Serve React build
+app.use(express.static(path.join(__dirname, "build")));
+
+// React fallback (LAST THING)
 app.use((req, res) => {
-  res.status(404).json({ message: "Route not found" });
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-const PORT = 3000;
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
