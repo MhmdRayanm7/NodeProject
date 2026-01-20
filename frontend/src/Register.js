@@ -15,12 +15,16 @@ function Register({ setPage }) {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Register</h2>
-      <input placeholder="username" onChange={e => setUsername(e.target.value)} />
-      <input type="password" placeholder="password" onChange={e => setPassword(e.target.value)} />
-      <button onClick={register}>Register</button>
-      <button onClick={() => setPage("login")}>Back</button>
+
+      <input placeholder="Username" onChange={e => setUsername(e.target.value)} />
+      <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+
+      <button onClick={register}>Create Account</button>
+      <button className="secondary" onClick={() => setPage("login")}>
+        Back to Login
+      </button>
     </div>
   );
 }

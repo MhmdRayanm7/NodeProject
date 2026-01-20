@@ -24,17 +24,23 @@ function Levels() {
       body: JSON.stringify({
         level_name: name,
         difficulty: 1,
-        description: "from react"
+        description: "Created from UI"
       })
     });
+    setName("");
     loadLevels();
   };
 
   return (
-    <div>
-      <h2>Levels</h2>
-      <input placeholder="level name" onChange={e => setName(e.target.value)} />
-      <button onClick={addLevel}>Add</button>
+    <div className="container">
+      <h2>Game Levels</h2>
+
+      <input
+        placeholder="New level name"
+        value={name}
+        onChange={e => setName(e.target.value)}
+      />
+      <button onClick={addLevel}>Add Level</button>
 
       <ul>
         {levels.map(l => (
