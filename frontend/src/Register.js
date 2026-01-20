@@ -8,6 +8,7 @@ function Register({ setPage }) {
     const res = await fetch("http://localhost:3000/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ username, password })
     });
 
